@@ -6,6 +6,7 @@ import org.springframework.hateoas.Identifiable;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 
 /**
  * @autor A_Nakonechnyi
@@ -66,6 +67,50 @@ public class Ad implements Identifiable<Long> {
         }
     }
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.NEW;
+
+    public enum Status {
+
+        NEW,
+
+        PUBLISHED,
+
+        EXPIRED
+
+    }
+
+    //@Column(nullable = false)
+    @Lob
+    private LocalDateTime publishedAt;
+
+    private String comment;
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public LocalDateTime getPublishedAt() {
+
+        return publishedAt;
+    }
+
+    public void setPublishedAt(LocalDateTime publishedAt) {
+        this.publishedAt = publishedAt;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     @Override
     public Long getId() {
