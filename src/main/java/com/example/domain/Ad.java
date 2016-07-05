@@ -1,6 +1,5 @@
 package com.example.domain;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.hateoas.Identifiable;
 
 import javax.persistence.*;
@@ -23,6 +22,10 @@ public class Ad implements Identifiable<Long> {
     @Column (nullable = false)
     @Enumerated (EnumType.STRING)
     private Type type;
+
+    public void publish() {
+        setStatus(Ad.Status.PUBLISHED);
+    }
 
     public enum Type {
         BUY,
@@ -63,6 +66,18 @@ public class Ad implements Identifiable<Long> {
 
         public Location(String city, String area) {
             this.city = city;
+            this.area = area;
+        }
+
+        /*public String getCity() {
+            return city;
+        }*/
+
+        public void setCity(String city) {
+            this.city = city;
+        }
+
+        public void setArea(String area) {
             this.area = area;
         }
     }

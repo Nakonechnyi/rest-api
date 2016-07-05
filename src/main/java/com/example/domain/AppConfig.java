@@ -1,18 +1,18 @@
 package com.example.domain;
 
-
+import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.data.rest.core.event.ValidatingRepositoryEventListener;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
 import org.springframework.hateoas.UriTemplate;
 import org.springframework.hateoas.hal.CurieProvider;
 import org.springframework.hateoas.hal.DefaultCurieProvider;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
-
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -81,19 +81,19 @@ public class AppConfig /*extends WebSecurityConfigurerAdapter*/
         auth.userDetailsService(customUserDetailsService);
     }*/
 
-    /*@Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic().and()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/ui/admin.html").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "/ads*//**").hasRole("USER")
-                .antMatchers(HttpMethod.PUT, "/ads*//**").hasRole("USER")
-                .antMatchers(HttpMethod.PATCH, "/ads*//**").hasRole("USER")
-                .antMatchers(HttpMethod.DELETE, "/ads*//**").hasRole("USER")
-                .and()
-                .csrf().disable()
-                .headers().frameOptions().sameOrigin();
-    }*/
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.httpBasic().and()
+//                .authorizeRequests()
+//                .antMatchers(HttpMethod.GET, "/ui/admin.html").hasRole("USER")
+//                .antMatchers(HttpMethod.POST, "/ads*//**").hasRole("USER")
+//                .antMatchers(HttpMethod.PUT, "/ads*//**").hasRole("USER")
+//                .antMatchers(HttpMethod.PATCH, "/ads*//**").hasRole("USER")
+//                .antMatchers(HttpMethod.DELETE, "/ads*//**").hasRole("USER")
+//                .and()
+//                .csrf().disable()
+//                .headers().frameOptions().sameOrigin();
+//    }
 
 
      /*@Bean
@@ -274,10 +274,10 @@ ad.setLocation(new Ad.Location("Львів", nextDistrict()));
     }
 
 
-    /*@Bean
+    @Bean
     public Module newJavaTimeModule() {
         return new JavaTimeModule();
-    }*/
+    }
 
 
     @Configuration
