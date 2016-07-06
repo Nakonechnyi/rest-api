@@ -25,8 +25,20 @@ public class AdController {
     @RequestMapping(value = "/ads/{id}/publishing", method = RequestMethod.POST)
     @ResponseBody
     public Resource publish(@PathVariable("id") Long id, PersistentEntityResourceAssembler assembler) {
+
+        //TODO this in Service
         Ad ad = adRepository.findOne(id);
         ad.publish();
+        return assembler.toFullResource(adRepository.save(ad));
+    }
+
+    @RequestMapping(value = "/ads/{id}/expiretion", method = RequestMethod.POST)
+    @ResponseBody
+    public Resource expire(@PathVariable("id") Long id, PersistentEntityResourceAssembler assembler) {
+
+        //TODO this in Service
+        Ad ad = adRepository.findOne(id);
+        ad.expire();
         return assembler.toFullResource(adRepository.save(ad));
     }
 }

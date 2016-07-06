@@ -23,15 +23,12 @@ public class Ad implements Identifiable<Long> {
     @Enumerated (EnumType.STRING)
     private Type type;
 
-    public void publish() {
-        setStatus(Ad.Status.PUBLISHED);
-    }
+
 
     public enum Type {
         BUY,
-        SELL
+        SELL;
     }
-
     @Column (nullable = false)
     private BigInteger amount;
 
@@ -39,11 +36,12 @@ public class Ad implements Identifiable<Long> {
     @Enumerated (EnumType.STRING)
     private Currency currency;
 
+
+
     public enum Currency {
         USD,
-        EUR
+        EUR;
     }
-
     @Column (nullable = false)
     private BigDecimal rate;
 
@@ -62,38 +60,42 @@ public class Ad implements Identifiable<Long> {
         private String area;
 
         public Location() {
-        }
+    }
 
         public Location(String city, String area) {
-            this.city = city;
-            this.area = area;
-        }
+        this.city = city;
+        this.area = area;
+    }
 
         /*public String getCity() {
             return city;
         }*/
 
         public void setCity(String city) {
-            this.city = city;
-        }
-
-        public void setArea(String area) {
-            this.area = area;
-        }
+        this.city = city;
     }
 
+        public void setArea(String area) {
+        this.area = area;
+    }
+
+    }
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status = Status.NEW;
+
+
 
     public enum Status {
 
         NEW,
 
         PUBLISHED,
+        EXPIRED;
+    }
 
-        EXPIRED
-
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     //@Column(nullable = false)
@@ -103,87 +105,96 @@ public class Ad implements Identifiable<Long> {
     private String comment;
 
     public String getComment() {
-        return comment;
-    }
+    return comment;
+}
 
     public void setComment(String comment) {
-        this.comment = comment;
-    }
+    this.comment = comment;
+}
 
     public LocalDateTime getPublishedAt() {
 
-        return publishedAt;
-    }
+    return publishedAt;
+}
 
     public void setPublishedAt(LocalDateTime publishedAt) {
-        this.publishedAt = publishedAt;
-    }
+    this.publishedAt = publishedAt;
+}
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
 
     @Override
     public Long getId() {
-        return id;
-    }
+    return id;
+}
 
     public void setId(Long id) {
-        this.id = id;
-    }
+    this.id = id;
+}
 
     public Type getType() {
-        return type;
-    }
+    return type;
+}
 
     public void setType(Type type) {
-        this.type = type;
-    }
+    this.type = type;
+}
 
     public BigInteger getAmount() {
-        return amount;
-    }
+    return amount;
+}
 
     public void setAmount(BigInteger amount) {
-        this.amount = amount;
-    }
+    this.amount = amount;
+}
 
     public Currency getCurrency() {
-        return currency;
-    }
+    return currency;
+}
 
     public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
+    this.currency = currency;
+}
 
     public BigDecimal getRate() {
-        return rate;
-    }
+    return rate;
+}
 
     public void setRate(BigDecimal rate) {
-        this.rate = rate;
+    this.rate = rate;
 
-    }
-
+}
 
     public User getUser() {
-        return user;
-    }
+    return user;
+}
+
 
     public void setUser(User user) {
-        this.user = user;
-    }
+    this.user = user;
+}
 
     public Location getLocation() {
-        return location;
-    }
+    return location;
+}
 
     public void setLocation(Location location) {
-        this.location = location;
+    this.location = location;
+}
+
+    public void publish() {
+        if (status == Status.NEW) {
+            status = Status.PUBLISHED;
+        } else {
+            throw new InvalidAdStateTransitionException("Ad can be published only it is " + Status.NEW);
+        }
+    }
+
+    public void expire() {
+        if (status == Status.PUBLISHED) {
+            status = Status.EXPIRED;
+        } else {
+            throw new InvalidAdStateTransitionException("Ad can be finished only it is " + Status.PUBLISHED);
+        }
     }
 }
 
