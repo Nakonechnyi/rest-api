@@ -1,5 +1,6 @@
 package com.example.domain;
 
+import com.example.exception.InvalidAdStateTransitionException;
 import org.springframework.hateoas.Identifiable;
 
 import javax.persistence.*;
@@ -23,12 +24,11 @@ public class Ad implements Identifiable<Long> {
     @Enumerated (EnumType.STRING)
     private Type type;
 
-
-
     public enum Type {
         BUY,
         SELL;
     }
+
     @Column (nullable = false)
     private BigInteger amount;
 
@@ -36,12 +36,11 @@ public class Ad implements Identifiable<Long> {
     @Enumerated (EnumType.STRING)
     private Currency currency;
 
-
-
     public enum Currency {
         USD,
         EUR;
     }
+
     @Column (nullable = false)
     private BigDecimal rate;
 
@@ -84,14 +83,14 @@ public class Ad implements Identifiable<Long> {
     @Enumerated(EnumType.STRING)
     private Status status = Status.NEW;
 
-
-
     public enum Status {
-
         NEW,
-
         PUBLISHED,
         EXPIRED;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 
     public void setStatus(Status status) {
