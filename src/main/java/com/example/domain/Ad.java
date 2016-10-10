@@ -1,7 +1,6 @@
 package com.example.domain;
 
 import com.example.exception.InvalidAdStateTransitionException;
-import org.springframework.hateoas.Identifiable;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -14,7 +13,7 @@ import java.time.LocalDateTime;
  */
 
 @Entity
-public class Ad implements Identifiable<Long> {
+public class Ad implements LinkableAd {
 
     @Id
     @GeneratedValue
@@ -86,9 +85,10 @@ public class Ad implements Identifiable<Long> {
     public enum Status {
         NEW,
         PUBLISHED,
-        EXPIRED;
+        EXPIRED
     }
 
+    @Override
     public Status getStatus() {
         return status;
     }
@@ -180,20 +180,24 @@ public class Ad implements Identifiable<Long> {
     this.location = location;
 }
 
-    public void publish() {
+    public Ad publish() {
         if (status == Status.NEW) {
+            publishedAt = LocalDateTime.now();
             status = Status.PUBLISHED;
         } else {
-            throw new InvalidAdStateTransitionException("Ad can be published only it is " + Status.NEW);
+            throw new InvalidAdStateTransitionException("Ad can be published only when it is " + Status.NEW);
         }
+        return this;
     }
 
-    public void expire() {
+    public Ad expire() {
         if (status == Status.PUBLISHED) {
             status = Status.EXPIRED;
         } else {
-            throw new InvalidAdStateTransitionException("Ad can be finished only it is " + Status.PUBLISHED);
+            throw new InvalidAdStateTransitionException("Ad can be finished only when it is " + Status.PUBLISHED);
         }
+        return this;
     }
+
 }
 
