@@ -1,7 +1,6 @@
 package com.example;
 
-import com.example.domain.Ad;
-import com.example.domain.AdRepository;
+import com.example.service.AdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
@@ -20,25 +19,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AdController {
 
     @Autowired
-    private AdRepository adRepository;
+    private AdService adService;
 
-    @RequestMapping(value = "/ads/{id}/publishing", method = RequestMethod.POST)
+    @RequestMapping(value = "/ads/{id}/publishing", method = RequestMethod.POST, produces = "application/hal+json")
     @ResponseBody
     public Resource publish(@PathVariable("id") Long id, PersistentEntityResourceAssembler assembler) {
-
-        //TODO this in Service
-        Ad ad = adRepository.findOne(id);
-        ad.publish();
-        return assembler.toFullResource(adRepository.save(ad));
+        return assembler.toFullResource(adService.publish(id));
     }
 
-    @RequestMapping(value = "/ads/{id}/expiretion", method = RequestMethod.POST)
+    @RequestMapping(value = "/ads/{id}/expiretion", method = RequestMethod.POST, produces = "application/hal+json")
     @ResponseBody
     public Resource expire(@PathVariable("id") Long id, PersistentEntityResourceAssembler assembler) {
-
-        //TODO this in Service
-        Ad ad = adRepository.findOne(id);
-        ad.expire();
-        return assembler.toFullResource(adRepository.save(ad));
+        return assembler.toFullResource(adService.expire(id));
     }
 }
