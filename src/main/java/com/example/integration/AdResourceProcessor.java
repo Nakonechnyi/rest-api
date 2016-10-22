@@ -1,8 +1,8 @@
 package com.example.integration;
 
 import com.example.AdController;
-import com.example.domain.Ad;
-import com.example.domain.LinkableAd;
+import com.example.domain.ad.Ad;
+import com.example.domain.ad.LinkableAd;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.support.RepositoryEntityLinks;
 import org.springframework.hateoas.Resource;

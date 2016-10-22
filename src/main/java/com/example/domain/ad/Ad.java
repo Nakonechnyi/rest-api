@@ -1,5 +1,6 @@
-package com.example.domain;
+package com.example.domain.ad;
 
+import com.example.domain.User;
 import com.example.exception.InvalidAdStateTransitionException;
 
 import javax.persistence.*;

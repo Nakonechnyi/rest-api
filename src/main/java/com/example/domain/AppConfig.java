@@ -1,5 +1,8 @@
 package com.example.domain;
 
+import com.example.domain.ad.Ad;
+import com.example.domain.ad.AdRepository;
+import com.example.domain.ad.AdValidator;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -292,6 +295,10 @@ ad.setLocation(new Ad.Location("Львів", nextDistrict()));
 
         }
 
+        @Override
+        public void configureValidatingRepositoryEventListener(ValidatingRepositoryEventListener validatingListener) {
+            validatingListener.addValidator("beforeCreate", new AdValidator());
+        }
         /*@Override
         public void configureValidatingRepositoryEventListener(ValidatingRepositoryEventListener validatingListener) {
             validatingListener.addValidator("beforeCreate", new AdValidator());

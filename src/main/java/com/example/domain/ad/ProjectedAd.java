@@ -1,4 +1,4 @@
-package com.example.domain;
+package com.example.domain.ad;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;

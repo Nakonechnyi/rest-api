@@ -1,7 +1,7 @@
 package com.example.service;
 
-import com.example.domain.Ad;
-import com.example.domain.AdRepository;
+import com.example.domain.ad.Ad;
+import com.example.domain.ad.AdRepository;
 import com.example.exception.InvalidAdStateTransitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
